@@ -7,7 +7,7 @@ import { json } from "express"
 const createToken = (id)=>{
     return jwt.sign({id}, process.env.JWT_SECRET)
 }
-const loginUser = (req,res)=>{
+const loginUser = async(req,res)=>{
     
 }
 const registerUser = async(req,res)=>{
