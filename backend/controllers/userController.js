@@ -8,7 +8,27 @@ const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET)
 }
 const loginUser = async (req, res) => {
+    const { email, password } = req.body
 
+    const user = await userModel.findOne({ email })
+    try {
+        if (!user) {
+            return res.json({ success: false, message: "User does'nt exit!" })
+        }
+        else {
+            const isMatch = await bycript.compare(password, user.password)
+
+            if (isMatch) {
+                const token = createToken(user._id)
+                return res.json({ success: true, token })
+            } else {
+                return res.json({ success: false, message: "Invalid password!" })
+            }
+        }
+    }
+    catch (error) {
+        return res.json({ success: false, message: error.message })
+    }
 }
 const registerUser = async (req, res) => {
     try {
@@ -48,26 +68,18 @@ const registerUser = async (req, res) => {
     }
 }
 const adminLogin = async (req, res) => {
-    const { email, password } = req.body
+    try{
+        const {adminEmail, adminPassword} = req.body
 
-    const user = await userModel.findOne({ email })
-    try {
-        if (!user) {
-            return res.json({ success: false, message: "User does'nt exit!" })
+        if(adminEmail === process.env.ADMIN_EMAIL && adminPassword === process.env.ADMIN_PASSWORD){
+            const token = jwt.sign(adminEmail+adminPassword,process.env.JWT_SECRET);
+            res.json({success:true,token})
+        }else{
+            return res.json({success:false,message:"Failed login"})
         }
-        else {
-            const isMatch = await bycript.compare(password, user.password)
-
-            if (isMatch) {
-                const token = createToken(user._id)
-                return res.json({ success: true, token })
-            } else {
-                return res.json({ success: false, message: "Invalid password!" })
-            }
-        }
-    }
-    catch (error) {
-        return res.json({ success: false, message: error.message })
+    }catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
     }
 }
 export { loginUser, registerUser, adminLogin }

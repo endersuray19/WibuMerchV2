@@ -10,7 +10,7 @@ const getProduct = async (req, res) => {
    }
    catch (error) {
         console.log(error)
-        res.json({ success: false, message: error.messsage })
+        res.json({ success: false, message: error.message })
     }
 }
 const listProduct = async (req, res) => {
