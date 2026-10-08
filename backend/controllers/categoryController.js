@@ -1,5 +1,6 @@
 import categoryModel from "../models/categoryModel.js"
 import {v2 as cloudinary} from "cloudinary"
+import productModel from "../models/productModel.js";
 
 const listCategory = async(req,res)=>{
     try{
@@ -36,6 +37,27 @@ const addCategory = async(req,res)=>{
   }
 
 const editCategory = async(req,res)=>{
+    try{
+ const {id,name,description,image} = req.body
+
+    const category = await categoryModel.findById(id)
+    const categoryDataUpdate = {
+        name: name || category.name,
+        description: description || category.description
+    }
+    if(req.file){
+        const imageUpload = await cloudinary.uploader.upload(req.file.path,{resource_type:'image'})
+        categoryDataUpdate.image = imageUpload.secure_url
+    }
+     res.json({success:true,message:"Category updated successfullt"})
+    await categoryModel.findByIdAndUpdate(id,categoryDataUpdate)
+    }catch(error)
+  {
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }
+   
+
     
 }
 const removeCategory = async(req,res)=>{
