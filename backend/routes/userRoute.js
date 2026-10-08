@@ -3,8 +3,8 @@ import { adminLogin, loginUser, registerUser } from "../controllers/userControll
 
 const userRoute = express.Router()
 
-userRoute.post('/register',registerUser)
-userRoute.post('/login',loginUser)
-userRoute.post('/admin',adminLogin)
+userRoute.post('/register', registerUser)
+userRoute.post('/login', loginUser)
+userRoute.post('/admin', adminLogin)
 
 export default userRoute;

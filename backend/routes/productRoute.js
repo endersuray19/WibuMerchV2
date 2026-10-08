@@ -6,10 +6,10 @@ import adminAuth from "../middleware/adminAuth.js";
 
 const routeProduct = express.Router()
 
-routeProduct.get("/index",adminAuth,listProduct)
-routeProduct.post("/add",adminAuth,upload.array('images',10),addProduct)
-routeProduct.post("/edit",adminAuth,upload.array('images',10),editProduct)
-routeProduct.post("/remove",adminAuth,removeProduct)
-routeProduct.get("/detail-product",adminAuth,getProduct)
+routeProduct.get("/index", adminAuth, listProduct)
+routeProduct.post("/add", adminAuth, upload.array('images', 10), addProduct)
+routeProduct.post("/edit", adminAuth, upload.array('images', 10), editProduct)
+routeProduct.post("/remove", adminAuth, removeProduct)
+routeProduct.get("/detail-product", adminAuth, getProduct)
 
 export default routeProduct

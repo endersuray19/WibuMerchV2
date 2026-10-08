@@ -68,16 +68,16 @@ const registerUser = async (req, res) => {
     }
 }
 const adminLogin = async (req, res) => {
-    try{
-        const {adminEmail, adminPassword} = req.body
+    try {
+        const { adminEmail, adminPassword } = req.body
 
-        if(adminEmail === process.env.ADMIN_EMAIL && adminPassword === process.env.ADMIN_PASSWORD){
-            const token = jwt.sign(adminEmail+adminPassword,process.env.JWT_SECRET);
-            res.json({success:true,token})
-        }else{
-            return res.json({success:false,message:"Failed login"})
+        if (adminEmail === process.env.ADMIN_EMAIL && adminPassword === process.env.ADMIN_PASSWORD) {
+            const token = jwt.sign(adminEmail + adminPassword, process.env.JWT_SECRET);
+            res.json({ success: true, token })
+        } else {
+            return res.json({ success: false, message: "Failed login" })
         }
-    }catch (error) {
+    } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })
     }

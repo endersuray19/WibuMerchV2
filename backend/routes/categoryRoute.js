@@ -6,11 +6,11 @@ import adminAuth from "../middleware/adminAuth.js"
 
 const categoryRoute = express.Router()
 
-categoryRoute.get("/index",adminAuth,listCategory)
-categoryRoute.post("/add",adminAuth,upload.single('image'),addCategory)
-categoryRoute.post("/edit",adminAuth,upload.single('image'),editCategory)
-categoryRoute.post("/remove",adminAuth,removeCategory)
-categoryRoute.get("/detail-category",adminAuth,getCategory)
+categoryRoute.get("/index", adminAuth, listCategory)
+categoryRoute.post("/add", adminAuth, upload.single('image'), addCategory)
+categoryRoute.post("/edit", adminAuth, upload.single('image'), editCategory)
+categoryRoute.post("/remove", adminAuth, removeCategory)
+categoryRoute.get("/detail-category", adminAuth, getCategory)
 
 
 export default categoryRoute
