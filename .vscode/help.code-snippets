@@ -1,0 +1,15 @@
+{
+	"Simple Try Catch JSON": {
+		"prefix": "try",
+		"body": [
+		"try{",
+        "console.log($0)",
+        "res.json({success: true,$0,message:' Successfully'})",
+		"}catch(error){",
+        "console.log(error)",
+        "res.json({success: false,message:error.message})",
+		"}",
+		],
+    "description": "Template try catch express simple"
+	}
+}

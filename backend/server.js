@@ -6,6 +6,7 @@ import connectCloudinary from './config/cloudinary.js'
 import userRoute from './routes/userRoute.js'
 import routeProduct from './routes/productRoute.js'
 import categoryRoute from './routes/categoryRoute.js'
+import manufactureRoute from './routes/manufactureRoute.js'
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -22,6 +23,8 @@ connectCloudinary()
 app.use('/api/user',userRoute)
 app.use('/api/product',routeProduct)
 app.use('/api/category',categoryRoute)
+app.use('/api/manufacture',manufactureRoute)
+
 app.get('/',(req,res)=>{
     res.send('API Success')
 })
