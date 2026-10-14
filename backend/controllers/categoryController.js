@@ -1,6 +1,6 @@
 import categoryModel from "../models/categoryModel.js"
 import { v2 as cloudinary } from "cloudinary"
-import productModel from "../models/productModel.js";
+
 
 const listCategory = async (req, res) => {
     try {
