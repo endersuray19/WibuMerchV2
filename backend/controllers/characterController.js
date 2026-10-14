@@ -13,12 +13,13 @@ const listCharacter = async(req,res)=>{
 }
 const addCharacter = async(req,res)=>{
       try {
-            const { name, description, image } = req.body
+            const { name, description, series } = req.body
             const imageUpload = await cloudinary.uploader.upload(req.file.path, { resource_type: 'image' })
             const imageUrl = imageUpload.secure_url
             const character = {
                 name,
                 description,
+                series:series,
                 image: imageUrl,
                 date: Date.now()
             }
@@ -34,12 +35,13 @@ const addCharacter = async(req,res)=>{
 }
 const editCharacter = async(req,res)=>{
      try {
-        const { id, name, description, image } = req.body
+        const { id, name, description, series } = req.body
 
         const character = await characterModel.findById(id)
         const characterDataUpdate = {
             name: name || character.name,
-            description: description || character.description
+            description: description || character.description,
+            series:series||character.series
         }
         if (req.file) {
             const imageUpload = await cloudinary.uploader.upload(req.file.path, { resource_type: 'image' })
