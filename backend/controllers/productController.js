@@ -87,12 +87,14 @@ const editProduct = async (req, res) => {
             )
             updateDataProduct.image = newImageUrl;
         }
-        await productModel.findByIdAndUpdate(id, updateDataProduct, { new: true })
+        console.log("BODY:", req.body);
+        console.log("FILES:", req.files);
+        await productModel.findByIdAndUpdate(id, updateDataProduct)
         res.json({ success: true, message: "Product updated successfully!" })
     }
     catch (error) {
         console.log(error)
-        res.json({ success: false, message: error.messsage })
+        res.json({ success: false, message: error.message })
     }
 
 }
