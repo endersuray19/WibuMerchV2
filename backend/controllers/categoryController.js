@@ -48,8 +48,9 @@ const editCategory = async (req, res) => {
             const imageUpload = await cloudinary.uploader.upload(req.file.path, { resource_type: 'image' })
             categoryDataUpdate.image = imageUpload.secure_url
         }
-        res.json({ success: true, message: "Category updated successfullt" })
+
         await categoryModel.findByIdAndUpdate(id, categoryDataUpdate)
+        res.json({ success: true, message: "Category updated successfullt" })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })

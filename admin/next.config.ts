@@ -13,11 +13,14 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    localPatterns: [
+    remotePatterns:[
       {
-        pathname: "/**",
-      },
-    ],
+        protocol:'https',
+        hostname:'res.cloudinary.com',
+        port:'',
+        pathname:'/**'
+      }
+    ]
   },
   turbopack: {
     root: __dirname,

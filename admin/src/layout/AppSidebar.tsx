@@ -18,17 +18,20 @@ import {
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  UserIcon,
 } from "../icons/index";
 import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
   key: string;
+  label: string,
   icon: React.ReactNode;
   path?: string;
   new?: boolean;
   target?: string;
   subItems?: {
     key: string;
+    label: string;
     path: string;
     pro?: boolean;
     new?: boolean;
@@ -40,67 +43,64 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     key: "dashboard",
-    subItems: [{ key: "ecommerceHome", path: "/" }],
+    label: "Dashboard",
+    path: "/",
   },
   {
-    icon: <CalenderIcon />,
-    key: "calendar",
-    path: "/calendar",
+    icon: <BoxCubeIcon />,
+    key: "management",
+    label:"Management",
+    path:"/",
+    subItems:[
+      {key:"category",label:"Category",path:"/management/category"},
+      {key:"subcategory",label:"Sub Category",path:"/admin/subcategory/index"},
+      {key:"series",label:"Series",path:"/admin/series/index"},
+      {key:"character",label:"Character",path:"/admin/character/index"},
+      {key:"manufacture",label:"Manufacture",path:"/admin/manufacture/index"},
+    ]
   },
   {
-    icon: <UserCircleIcon />,
-    key: "userProfile",
-    path: "/profile",
-  },
-  {
-    key: "forms",
-    icon: <ListIcon />,
-    subItems: [{ key: "formElements", path: "/form-elements", pro: false }],
-  },
-  {
-    key: "tables",
-    icon: <TableIcon />,
-    subItems: [{ key: "basicTables", path: "/basic-tables", pro: false }],
-  },
-  {
-    key: "pages",
-    icon: <PageIcon />,
-    subItems: [
-      { key: "blankPage", path: "/blank" },
-      { key: "error404", path: "/error-404" },
-    ],
+    icon: <UserIcon />,
+    key: "master",
+    label:"Master",
+    path:"/",
+    subItems:[
+      {key:"user",label:"User",path:"/admin/user/index"},
+      {key:"product",label:"Products",path:"/admin/product/index"},
+     
+    ]
   },
 ];
 
 const othersItems: NavItem[] = [
-  {
-    icon: <PieChartIcon />,
-    key: "charts",
-    subItems: [
-      { key: "lineChart", path: "/line-chart", pro: false },
-      { key: "barChart", path: "/bar-chart", pro: false },
-    ],
-  },
-  {
-    icon: <BoxCubeIcon />,
-    key: "uiElements",
-    subItems: [
-      { key: "alerts", path: "/alerts" },
-      { key: "avatar", path: "/avatars" },
-      { key: "badge", path: "/badge" },
-      { key: "buttons", path: "/buttons" },
-      { key: "images", path: "/images" },
-      { key: "videos", path: "/videos" },
-    ],
-  },
-  {
-    icon: <PlugInIcon />,
-    key: "authentication",
-    subItems: [
-      { key: "signIn", path: "/signin", pro: false },
-      { key: "signUp", path: "/signup", pro: false },
-    ],
-  },
+  // {
+  //   icon: <PieChartIcon />,
+  //   key: "charts",
+  //   subItems: [
+  //     { key: "lineChart", path: "/line-chart", pro: false },
+  //     { key: "barChart", path: "/bar-chart", pro: false },
+  //   ],
+  // },
+  // {
+  //   icon: <BoxCubeIcon />,
+  //   key: "uiElements",
+  //   subItems: [
+  //     { key: "alerts", path: "/alerts" },
+  //     { key: "avatar", path: "/avatars" },
+  //     { key: "badge", path: "/badge" },
+  //     { key: "buttons", path: "/buttons" },
+  //     { key: "images", path: "/images" },
+  //     { key: "videos", path: "/videos" },
+  //   ],
+  // },
+  // {
+  //   icon: <PlugInIcon />,
+  //   key: "authentication",
+  //   subItems: [
+  //     { key: "signIn", path: "/signin", pro: false },
+  //     { key: "signUp", path: "/signup", pro: false },
+  //   ],
+  // },
 ];
 
 const AppSidebar: React.FC = () => {
@@ -110,7 +110,7 @@ const AppSidebar: React.FC = () => {
 
   const renderMenuItems = (
     navItems: NavItem[],
-    menuType: "main" | "support" | "others",
+    menuType: "main" | "support" ,
   ) => (
     <ul className="flex flex-col gap-1">
       {navItems.map((nav, index) => (
@@ -138,7 +138,9 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className="menu-item-text">{t(`items.${nav.key}`)}</span>
+                 <span className="menu-item-text">
+                    {nav.label || nav.key}
+                  </span>
               )}
               {nav.new && (isExpanded || isHovered || isMobileOpen) && (
                 <span
@@ -189,7 +191,7 @@ const AppSidebar: React.FC = () => {
                 </span>
                 {(isExpanded || isHovered || isMobileOpen) && (
                   <span className="menu-item-text">
-                    {t(`items.${nav.key}`)}
+                    {nav.label || nav.key}
                   </span>
                 )}
               </Link>
@@ -214,32 +216,29 @@ const AppSidebar: React.FC = () => {
                     <Link
                       href={subItem.path}
                       target={subItem.target}
-                      className={`menu-dropdown-item ${
-                        isActive(subItem.path)
+                      className={`menu-dropdown-item ${isActive(subItem.path)
                           ? "menu-dropdown-item-active"
                           : "menu-dropdown-item-inactive"
-                      }`}
+                        }`}
                     >
-                      {t(`items.${subItem.key}`)}
+                    {subItem.label||subItem.key}
                       <span className="ms-auto flex items-center gap-1">
                         {subItem.new && (
                           <span
-                            className={`ms-auto ${
-                              isActive(subItem.path)
+                            className={`ms-auto ${isActive(subItem.path)
                                 ? "menu-dropdown-badge-active"
                                 : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge`}
+                              } menu-dropdown-badge`}
                           >
                             {t("badges.new")}
                           </span>
                         )}
                         {subItem.pro && (
                           <span
-                            className={`ms-auto ${
-                              isActive(subItem.path)
+                            className={`ms-auto ${isActive(subItem.path)
                                 ? "menu-dropdown-badge-pro-active"
                                 : "menu-dropdown-badge-pro-inactive"
-                            } menu-dropdown-badge-pro`}
+                              } menu-dropdown-badge-pro`}
                           >
                             {t("badges.pro")}
                           </span>
@@ -326,20 +325,17 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 z-50 flex h-full flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out xl:mt-0 rtl:right-0 rtl:left-auto rtl:border-r-0 rtl:border-l dark:border-gray-800 dark:bg-gray-900 ${
-        isExpanded || isMobileOpen ? "w-72.5" : isHovered ? "w-72.5" : "w-22.5"
-      } ${
-        isMobileOpen
+      className={`fixed top-0 left-0 z-50 flex h-full flex-col border-r border-gray-200 bg-white px-5 text-gray-900 transition-all duration-300 ease-in-out xl:mt-0 rtl:right-0 rtl:left-auto rtl:border-r-0 rtl:border-l dark:border-gray-800 dark:bg-gray-900 ${isExpanded || isMobileOpen ? "w-72.5" : isHovered ? "w-72.5" : "w-22.5"
+        } ${isMobileOpen
           ? "translate-x-0"
           : "-translate-x-full rtl:translate-x-full"
-      } xl:translate-x-0 xl:rtl:translate-x-0`}
+        } xl:translate-x-0 xl:rtl:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex py-8 ${
-          !isExpanded && !isHovered ? "xl:justify-center" : "justify-start"
-        }`}
+        className={`flex py-8 ${!isExpanded && !isHovered ? "xl:justify-center" : "justify-start"
+          }`}
       >
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
@@ -380,11 +376,10 @@ const AppSidebar: React.FC = () => {
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 flex text-xs leading-5 text-gray-400 uppercase ${
-                  !isExpanded && !isHovered
+                className={`mb-4 flex text-xs leading-5 text-gray-400 uppercase ${!isExpanded && !isHovered
                     ? "xl:justify-center"
                     : "justify-start"
-                }`}
+                  }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
                   t("groups.menu")
@@ -396,24 +391,12 @@ const AppSidebar: React.FC = () => {
             </div>
 
             <div>
-              <h2
-                className={`mb-4 flex text-xs leading-5 text-gray-400 uppercase ${
-                  !isExpanded && !isHovered
-                    ? "xl:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  t("groups.others")
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(othersItems, "others")}
+             
+             
             </div>
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
+       
       </div>
     </aside>
   );
