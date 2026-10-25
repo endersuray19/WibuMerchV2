@@ -22,9 +22,9 @@ export default async function Category() {
       <div className="rounded-sm border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default bg-white dark:border-white/5 dark:bg-white/3 sm:px-7.5 xl:pb-1">
         <Breadcrumb pageName='Category' />
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
-        <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/category/create">
-        Add Category
-        </Link>
+          <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/category/create">
+            Add Category
+          </Link>
           <div className="max-w-full overflow-x-auto">
             <Table>
               {/* Table Header */}
@@ -55,9 +55,13 @@ export default async function Category() {
               {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/5">
                 {categories.length === 0 ? (
-                  <span className='block text-theme-sm  text-gray-800 dark:text-white px-5 py-5'>
-                    The data is empty
-                  </span>)
+                  <tr>
+                    <td>
+                      <p className='block text-theme-sm  text-gray-800 dark:text-white px-5 py-5'>
+                        The data is empty
+                      </p>
+                    </td>
+                  </tr>)
                   :
                   (
                     categories.map((item: any) => (
