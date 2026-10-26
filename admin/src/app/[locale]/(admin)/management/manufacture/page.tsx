@@ -1,0 +1,100 @@
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb'
+import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table'
+import { api } from '@/lib/axios'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+
+export default async function Manufacture() {
+    const response = await api.get("/manufacture/index")
+    const manufacture = response.data.manufactures || []
+    console.log("ada data : ", manufacture)
+
+    return (
+        <div>
+            <div className="rounded-sm border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default bg-white dark:border-white/5 dark:bg-white/3 sm:px-7.5 xl:pb-1">
+                <Breadcrumb pageName='Category' />
+                <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
+                    <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/category/create">
+                        Add Category
+                    </Link>
+                    <div className="max-w-full overflow-x-auto">
+                        <Table>
+                            {/* Table Header */}
+                            <TableHeader className="border-b border-gray-100 dark:border-white/5">
+                                <TableRow>
+                                    <TableCell
+                                        isHeader
+                                        className="px-5 py-3 text-start text-theme-xs font-medium text-gray-500 dark:text-gray-400"
+                                    >
+                                        Name
+                                    </TableCell>
+                                    <TableCell
+                                        isHeader
+                                        className="px-5 py-3 text-start text-theme-xs font-medium text-gray-500 dark:text-gray-400"
+                                    >
+                                        Date
+                                    </TableCell>
+                                    <TableCell
+                                        isHeader
+                                        className="px-5 py-3 text-start text-theme-xs font-medium text-gray-500 dark:text-gray-400"
+                                    >
+                                        Action
+                                    </TableCell>
+
+                                </TableRow>
+                            </TableHeader>
+
+                          
+                            <TableBody className="divide-y divide-gray-100 dark:divide-white/5">
+                                {manufacture.length === 0 ? (
+                                    <tr>
+                                        <td>
+                                            <p className='block text-theme-sm  text-gray-800 dark:text-white px-5 py-5'>
+                                                The data is empty
+                                            </p>
+                                        </td>
+                                    </tr>
+                                ) :
+                                    manufacture.map((item: any) => (
+                                        <TableRow key={item._id}>
+                                            <TableCell className="px-5 py-4 text-start sm:px-6">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="h-10 w-10 overflow-hidden rounded-full">
+                                                        <Image
+                                                            width={40}
+                                                            height={40}
+                                                            src={item.image}
+                                                            alt={item.name}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <span className='block text-theme-sm  text-gray-800 dark:text-white'>
+                                                            {item.name}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                             <TableCell className="px-5 py-4 text-start sm:px-6">
+                                                <div className="flex items-center gap-3">
+                                                    <div>
+                                                        <span className='block text-theme-sm  text-gray-800 dark:text-white'>
+                                                            {item.date}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+
+

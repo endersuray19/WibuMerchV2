@@ -44,6 +44,7 @@ export default function SignInForm() {
       response = await api.post("/user/admin", payload)
       const token = response.data?.token || response.data?.admin_token
       localStorage.setItem("admin_token", token)
+      document.cookie = `admin_token=${token}; path=/; max-age=86400;`;
       if (response.data.success) {
         await Swal.fire({
           icon: "success",
