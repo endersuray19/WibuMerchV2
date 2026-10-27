@@ -1,3 +1,4 @@
+import ActionForm from '@/components/ActionForm/ActionForm'
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table'
 import { api } from '@/lib/axios'
@@ -13,10 +14,10 @@ export default async function Manufacture() {
     return (
         <div>
             <div className="rounded-sm border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default bg-white dark:border-white/5 dark:bg-white/3 sm:px-7.5 xl:pb-1">
-                <Breadcrumb pageName='Category' />
+                <Breadcrumb pageName='Manufacture' />
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
-                    <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/category/create">
-                        Add Category
+                    <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/manufacture/add">
+                        Add Manufacture
                     </Link>
                     <div className="max-w-full overflow-x-auto">
                         <Table>
@@ -45,7 +46,7 @@ export default async function Manufacture() {
                                 </TableRow>
                             </TableHeader>
 
-                          
+
                             <TableBody className="divide-y divide-gray-100 dark:divide-white/5">
                                 {manufacture.length === 0 ? (
                                     <tr>
@@ -75,7 +76,7 @@ export default async function Manufacture() {
                                                     </div>
                                                 </div>
                                             </TableCell>
-                                             <TableCell className="px-5 py-4 text-start sm:px-6">
+                                            <TableCell className="px-5 py-4 text-start sm:px-6">
                                                 <div className="flex items-center gap-3">
                                                     <div>
                                                         <span className='block text-theme-sm  text-gray-800 dark:text-white'>
@@ -84,7 +85,11 @@ export default async function Manufacture() {
                                                     </div>
                                                 </div>
                                             </TableCell>
+                                            <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
+                                                <ActionForm editUrl={`/management/manufacture/edit/${item._id}`} endpoint='/manufacture' id={item._id} />
+                                            </TableCell>
                                         </TableRow>
+
                                     ))}
                             </TableBody>
                         </Table>

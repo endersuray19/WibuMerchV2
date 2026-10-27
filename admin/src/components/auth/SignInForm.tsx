@@ -52,7 +52,6 @@ export default function SignInForm() {
         });
         toast.success("Sign in Sucessfully!")
         router.push("/")
-        router.refresh()
       }
     }
     catch (error: any) {

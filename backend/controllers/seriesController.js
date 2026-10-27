@@ -5,7 +5,6 @@ const listSeries = async (req, res) => {
 
     try {
         const series = await seriesModel.find({})
-        console.log(series)
         res.json({ success: true, series })
     } catch (error) {
         console.log(error)

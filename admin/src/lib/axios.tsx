@@ -8,7 +8,7 @@ api.interceptors.request.use(
         if (typeof window !== "undefined") {
             const token = localStorage.getItem("admin_token")
             if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
+                config.headers.token = token;
             }
            
         }
@@ -20,7 +20,7 @@ api.interceptors.request.use(
                     if (token) {
                         config.headers.token = token;
                     }
-                    console.log("Berhasil dapet token= ", token)
+                    
                 } catch (error) {
                     console.error("Gagal mengambil token dari cookies server:", error);
                 }

@@ -1,6 +1,7 @@
 "use client"
 import Form from '@/components/form/Form';
 import useForm from '@/hooks/useForm';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
@@ -88,6 +89,31 @@ export default function FormSeries({ series }: series) {
                             </button>
                         </div>
                     </form>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                    {imagePreview ? (
+                        <div className="relative w-64 h-64 rounded bg-white shadow-md overflow-hidden border">
+                            <Image
+                                src={imagePreview}
+                                alt="preview"
+                                fill
+                                className="object-cover"
+                            />
+                            {/* <button
+                                    type="button"
+                                    onClick={handleRemoveImage}
+                                    className="absolute right-2 top-2 z-10 rounded-full bg-red-600 p-1.5 text-white transition-opacity hover:bg-red-700 cursor-pointer"
+                                  >
+                                    <X size={16} />
+                                  </button> */}
+                        </div>
+                    ) : (
+
+                        <span className="w-64 h-64 border-2 border-dashed border-gray-300 rounded flex items-center justify-center text-gray-400">
+                            No Image Preview
+                        </span>
+
+                    )}
                 </div>
 
             </div>

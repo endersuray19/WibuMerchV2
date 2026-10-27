@@ -1,9 +1,6 @@
 "use client"
 import { api } from '@/lib/axios';
-import C from '@fullcalendar/react';
-import { url } from 'inspector';
 import { useRouter } from 'next/navigation';
-import { Router } from 'next/router';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
@@ -68,7 +65,7 @@ export default function useForm({ tabel, endpointEdit, endpointAdd, dataImage, p
           text: tabel ? `${titleTable} updated successfully!` : `${titleTable} added successfully!`
         });
         toast.success(tabel ? `${titleTable} updated successfully!` : `${titleTable} added successfully!`)
-        router.push('/management/category');
+        router.push(path);
         router.refresh()
       } else {
         throw new Error(response.data.message || "Failed to input data")
