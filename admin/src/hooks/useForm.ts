@@ -9,16 +9,17 @@ import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
 interface tabelForm {
-  tabel: string;
+  tabel?: string;
   endpointEdit: string;
   endpointAdd: string;
   path: string;
   idData: string;
-  dataImage: string;
+  dataImage?: string;
+  titleTable:string;
 }
 
 
-export default function useForm({ tabel, endpointEdit, endpointAdd, dataImage, path, idData }: tabelForm) {
+export default function useForm({ tabel, endpointEdit, endpointAdd, dataImage, path, idData,titleTable }: tabelForm) {
   const [loading, setLoading] = useState(false)
   const router = useRouter();
 
@@ -64,9 +65,9 @@ export default function useForm({ tabel, endpointEdit, endpointAdd, dataImage, p
 
           icon: "success",
           title: "Success",
-          text: tabel ? "Category updated successfully!" : "Category added successfully!"
+          text: tabel ? `${titleTable} updated successfully!` : `${titleTable} added successfully!`
         });
-        toast.success(tabel ? "Category updated successfully!" : "Category added successfully!")
+        toast.success(tabel ? `${titleTable} updated successfully!` : `${titleTable} added successfully!`)
         router.push('/management/category');
         router.refresh()
       } else {
@@ -90,6 +91,8 @@ export default function useForm({ tabel, endpointEdit, endpointAdd, dataImage, p
       setImagePreview(URL.createObjectURL(file))
     }
   }
-
+  return{
+    handleSubmit,handleFileChange,imagePreview,selectedFile,loading
+  }
 
 }
