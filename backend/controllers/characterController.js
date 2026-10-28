@@ -3,8 +3,8 @@ import { v2 as cloudinary } from "cloudinary"
 
 const listCharacter = async(req,res)=>{
      try {
-            const categories = await characterModel.find({});
-            res.json({ success: true, categories, message: "ini list nya sukses masuk" })
+            const character = await characterModel.find({});
+            res.json({ success: true, character, message: "ini list nya sukses masuk" })
         }
         catch (error) {
             console.log(error)

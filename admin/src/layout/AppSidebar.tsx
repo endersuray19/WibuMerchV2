@@ -55,7 +55,7 @@ const navItems: NavItem[] = [
       {key:"category",label:"Category",path:"/management/category"},
       {key:"subcategory",label:"Sub Category",path:"/admin/subcategory/index"},
       {key:"series",label:"Series",path:"/management/series"},
-      {key:"character",label:"Character",path:"/admin/character/index"},
+      {key:"character",label:"Character",path:"/management/character"},
       {key:"manufacture",label:"Manufacture",path:"/management/manufacture"},
     ]
   },
