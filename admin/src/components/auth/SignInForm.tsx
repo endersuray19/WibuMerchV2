@@ -1,16 +1,14 @@
 "use client";
 
-import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
-import Button from "@/components/ui/button/Button";
-import { Link } from "@/i18n/navigation";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
+import {  EyeCloseIcon, EyeIcon } from "@/icons";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import Error from "next/error";
 interface signProps {
   name: string;
   password: string;
@@ -41,10 +39,13 @@ export default function SignInForm() {
     });
     let response;
     try {
-      response = await api.post("/user/admin", payload)
+      response = await api.post("/user/admin", payload);
+      if(!response.data.success){
+        throw new Error(response.data.message||"Failed to sign in")
+      }
       const token = response.data?.token || response.data?.admin_token
       localStorage.setItem("admin_token", token)
-      document.cookie = `admin_token=${token}; path=/; max-age=86400;`;
+      document.cookie = `admin_token=${token}; path=/; max-age=10800;`;
       if (response.data.success) {
         await Swal.fire({
           icon: "success",
@@ -57,7 +58,7 @@ export default function SignInForm() {
     catch (error: any) {
         Swal.fire({
           title: "Error",
-          text: error.response?.data?.message || error.message || "There is something wrong!",
+          text: error.response?.data?.message || error.message || "Failed to sign in!",
           icon: "error",
         });
       }

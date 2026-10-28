@@ -5,7 +5,7 @@ import userModel from "../models/userModel.js"
 import { json } from "express"
 
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET)
+    return jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn:'3h'})
 }
 const loginUser = async (req, res) => {
     const { email, password } = req.body
@@ -72,7 +72,7 @@ const adminLogin = async (req, res) => {
         const { adminEmail, adminPassword } = req.body
 
         if (adminEmail === process.env.ADMIN_EMAIL && adminPassword === process.env.ADMIN_PASSWORD) {
-            const token = jwt.sign(adminEmail + adminPassword, process.env.JWT_SECRET);
+            const token = jwt.sign({adminEmail:adminEmail}, process.env.JWT_SECRET, {expiresIn:'3h'});
             res.json({ success: true, token })
         } else {
             return res.json({ success: false, message: "Failed login" })
