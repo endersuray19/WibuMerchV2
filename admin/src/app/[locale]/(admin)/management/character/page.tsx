@@ -9,12 +9,15 @@ import Link from "next/link"
 export default async function Character() {
     const response = await api.get("/character/index")
     const character = response.data.character || []
+    const seriesResponse = await api.get("/series/index")
+    const target = seriesResponse.data.series
+    
     return (
         <div>
             <div className="rounded-sm border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default bg-white dark:border-white/5 dark:bg-white/3 sm:px-7.5 xl:pb-1">
                 <Breadcrumb pageName='Character' />
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
-                    <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/character/create">
+                    <Link className='mx-4 mt-4 bg-blue-700 text-white px-2 py-2 inline-block rounded-md' href="/management/character/add">
                         Add Character
                     </Link>
                     <div className="max-w-full overflow-x-auto">
@@ -27,6 +30,12 @@ export default async function Character() {
                                         className="px-5 py-3 text-start text-theme-xs font-medium text-gray-500 dark:text-gray-400"
                                     >
                                         Name
+                                    </TableCell>
+                                    <TableCell
+                                        isHeader
+                                        className="px-5 py-3 text-start text-theme-xs font-medium text-gray-500 dark:text-gray-400"
+                                    >
+                                        Series
                                     </TableCell>
                                     <TableCell
                                         isHeader
@@ -46,7 +55,7 @@ export default async function Character() {
 
                             {/* Table Body */}
                             <TableBody className="divide-y divide-gray-100 dark:divide-white/5">
-                             {character.length === 0 ? (
+                                {character.length === 0 ? (
                                     <tr>
                                         <td>
                                             <p className='block text-theme-sm  text-gray-800 dark:text-white px-5 py-5'>
@@ -54,8 +63,8 @@ export default async function Character() {
                                             </p>
                                         </td>
                                     </tr>)
-                                   :(
-                                    character.map((item:any)=>(
+                                    : (
+                                        character.map((item: any) => (
                                             <TableRow key={item._id}>
                                                 <TableCell className="px-5 py-4 text-start sm:px-6">
                                                     <div className="flex items-center gap-3">
@@ -72,6 +81,15 @@ export default async function Character() {
                                                                 {item.name}
                                                             </span>
                                                         </div>
+
+                                                    </div>
+
+                                                </TableCell>
+                                                <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">
+                                                    <div>
+                                                        <span className='block text-theme-sm  text-gray-800 dark:text-white'>
+                                                            {item?.series?.name||"-"}
+                                                        </span>
                                                     </div>
                                                 </TableCell>
                                                 <TableCell className="px-4 py-3 text-start text-theme-sm text-gray-500 dark:text-gray-400">

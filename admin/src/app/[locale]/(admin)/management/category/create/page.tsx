@@ -6,7 +6,7 @@ import Form from "../form/form";
 export default function createCategory(){
     return(
         <div>
-            <Breadcrumb pageName="Create Category"/>
+            <Breadcrumb pageName="Add Category"/>
             <Form/>
         </div>
     )

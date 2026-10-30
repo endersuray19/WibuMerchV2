@@ -3,7 +3,7 @@ import { v2 as cloudinary } from "cloudinary"
 
 const listCharacter = async(req,res)=>{
      try {
-            const character = await characterModel.find({});
+            const character = await characterModel.find({}).populate('series');
             res.json({ success: true, character, message: "ini list nya sukses masuk" })
         }
         catch (error) {

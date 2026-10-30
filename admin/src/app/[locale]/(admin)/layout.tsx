@@ -13,7 +13,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
-const router = useRouter();
+  const router = useRouter();
   const [isAuthorized, setAuhorized] = useState(false)
 
 
@@ -21,22 +21,39 @@ const router = useRouter();
     const token = localStorage.getItem("admin_token")
 
     if (!token) {
-      router.push("/auth/signin")
+      router.push("/auth/signin");
+      return
     }
-    else {
-      setAuhorized(true)
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (Date.now() >= payload.exp * 1000) {
+        localStorage.removeItem("admin_token");
+        router.push("/auth/signin");
+      }
     }
-  },[router])
-  if(!isAuthorized){
-    return null
-  }
+    catch (e) {
+      console.log(e)
+      
+    }
+    setAuhorized(true)
+
+  }, [router])
+
+
   // Dynamic class for main content margin based on sidebar state
   const mainContentMargin = isMobileOpen
     ? "ml-0"
     : isExpanded || isHovered
-    ? "lg:ml-[290px]"
-    : "lg:ml-[90px]";
+      ? "lg:ml-[290px]"
+      : "lg:ml-[90px]";
 
+  if (!isAuthorized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <p className="text-gray-500 text-sm">Memeriksa sesi...</p>
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen xl:flex">
       {/* Sidebar and Backdrop */}

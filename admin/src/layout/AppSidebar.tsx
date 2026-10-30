@@ -6,8 +6,10 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSidebar } from "../context/SidebarContext";
+import {FactoryIcon, FilmIcon, FolderIcon, FolderTree, SmileIcon} from "lucide-react"
 import {
   BoxCubeIcon,
+  BoxIcon,
   CalenderIcon,
   ChevronDownIcon,
   GridIcon,
@@ -30,6 +32,7 @@ type NavItem = {
   new?: boolean;
   target?: string;
   subItems?: {
+    icon: React.ReactNode;
     key: string;
     label: string;
     path: string;
@@ -49,25 +52,25 @@ const navItems: NavItem[] = [
   {
     icon: <BoxCubeIcon />,
     key: "management",
-    label:"Management",
-    path:"/",
-    subItems:[
-      {key:"category",label:"Category",path:"/management/category"},
-      {key:"subcategory",label:"Sub Category",path:"/admin/subcategory/index"},
-      {key:"series",label:"Series",path:"/management/series"},
-      {key:"character",label:"Character",path:"/management/character"},
-      {key:"manufacture",label:"Manufacture",path:"/management/manufacture"},
+    label: "Management",
+    path: "/",
+    subItems: [
+      { icon: <FolderIcon />, key: "category", label: "Category", path: "/management/category" },
+      { icon: <FolderTree />, key: "subcategory", label: "Sub Category", path: "/management/subCategory" },
+      { icon: <FilmIcon />, key: "series", label: "Series", path: "/management/series" },
+      { icon: <SmileIcon />, key: "character", label: "Character", path: "/management/character" },
+      { icon: <FactoryIcon />, key: "manufacture", label: "Manufacture", path: "/management/manufacture" },
     ]
   },
   {
     icon: <UserIcon />,
     key: "master",
-    label:"Master",
-    path:"/",
-    subItems:[
-      {key:"user",label:"User",path:"/admin/user/index"},
-      {key:"product",label:"Products",path:"/admin/product/index"},
-     
+    label: "Master",
+    path: "/",
+    subItems: [
+      { icon: <BoxIcon />, key: "user", label: "User", path: "/admin/user/index" },
+      { icon: <BoxIcon />, key: "product", label: "Products", path: "/admin/product/index" },
+
     ]
   },
 ];
@@ -110,7 +113,7 @@ const AppSidebar: React.FC = () => {
 
   const renderMenuItems = (
     navItems: NavItem[],
-    menuType: "main" | "support" ,
+    menuType: "main" | "support",
   ) => (
     <ul className="flex flex-col gap-1">
       {navItems.map((nav, index) => (
@@ -138,9 +141,9 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                 <span className="menu-item-text">
-                    {nav.label || nav.key}
-                  </span>
+                <span className="menu-item-text">
+                  {nav.label || nav.key}
+                </span>
               )}
               {nav.new && (isExpanded || isHovered || isMobileOpen) && (
                 <span
@@ -217,17 +220,20 @@ const AppSidebar: React.FC = () => {
                       href={subItem.path}
                       target={subItem.target}
                       className={`menu-dropdown-item ${isActive(subItem.path)
-                          ? "menu-dropdown-item-active"
-                          : "menu-dropdown-item-inactive"
+                        ? "menu-dropdown-item-active"
+                        : "menu-dropdown-item-inactive"
                         }`}
                     >
-                    {subItem.label||subItem.key}
+                      <span className="shrink-0 w-6 h-4 flex items-center justify-center">
+                        {subItem.icon}
+                      </span>
+                      <span>{subItem.label || subItem.key}</span>
                       <span className="ms-auto flex items-center gap-1">
                         {subItem.new && (
                           <span
                             className={`ms-auto ${isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
+                              ? "menu-dropdown-badge-active"
+                              : "menu-dropdown-badge-inactive"
                               } menu-dropdown-badge`}
                           >
                             {t("badges.new")}
@@ -236,8 +242,8 @@ const AppSidebar: React.FC = () => {
                         {subItem.pro && (
                           <span
                             className={`ms-auto ${isActive(subItem.path)
-                                ? "menu-dropdown-badge-pro-active"
-                                : "menu-dropdown-badge-pro-inactive"
+                              ? "menu-dropdown-badge-pro-active"
+                              : "menu-dropdown-badge-pro-inactive"
                               } menu-dropdown-badge-pro`}
                           >
                             {t("badges.pro")}
@@ -377,8 +383,8 @@ const AppSidebar: React.FC = () => {
             <div>
               <h2
                 className={`mb-4 flex text-xs leading-5 text-gray-400 uppercase ${!isExpanded && !isHovered
-                    ? "xl:justify-center"
-                    : "justify-start"
+                  ? "xl:justify-center"
+                  : "justify-start"
                   }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
@@ -391,12 +397,12 @@ const AppSidebar: React.FC = () => {
             </div>
 
             <div>
-             
-             
+
+
             </div>
           </div>
         </nav>
-       
+
       </div>
     </aside>
   );

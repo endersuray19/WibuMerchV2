@@ -3,7 +3,7 @@ import { v2 as cloudinary } from "cloudinary"
 
 const listSubCategory = async (req, res) => {
     try {
-        const subCategories = await subCategoryModel.find({})
+        const subCategories = await subCategoryModel.find({}).populate('category')
         console.log(subCategories)
         res.json({ success: true, subCategories })
     } catch (error) {

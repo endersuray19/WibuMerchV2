@@ -1,3 +1,4 @@
+
 import { SidebarProvider } from "@/context/SidebarContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { isRtl } from "@/i18n/languages";
@@ -33,7 +34,7 @@ export default async function RootLayout({
   }
 
   setRequestLocale(locale);
-
+  
   return (
     <html lang={locale} dir={isRtl(locale as Locale) ? "rtl" : "ltr"}>
       <body className={`${outfit.className} dark:bg-gray-900`}>

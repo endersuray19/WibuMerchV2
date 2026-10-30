@@ -27,4 +27,18 @@ api.interceptors.request.use(
             }
         return config;
     }
+);
+api.interceptors.response.use(
+    (response)=>{
+        return response;
+    },
+    (error)=>{
+        if(error.response ** error.response.status === 401){
+            if(typeof window !== "undefined"){
+                localStorage.removeItem("admin_token");
+                console.log("Token kedaluwarsa terdeteksi, token dihapus dari localStorage.");
+            }
+        }
+        return Promise.reject(error)
+    }
 )
